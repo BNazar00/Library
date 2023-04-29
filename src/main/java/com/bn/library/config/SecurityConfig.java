@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole(ADMIN)
+                .requestMatchers("/upload/**").permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

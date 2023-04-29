@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USER}
@@ -18,3 +22,5 @@ application:
     jwt:
       access-token-secret: ${JWT_ACCESS_SECRET}
       access-token-expiration-time-in-minutes: 1440
+  upload:
+    path: ${UPLOAD_PATH}

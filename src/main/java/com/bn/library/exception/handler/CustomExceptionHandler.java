@@ -1,6 +1,9 @@
 package com.bn.library.exception.handler;
 
 import com.bn.library.dto.exception.ExceptionResponse;
+import com.bn.library.exception.FileDeleteException;
+import com.bn.library.exception.FileUploadException;
+import com.bn.library.exception.IncorrectInputException;
 import com.bn.library.exception.JsonWriteException;
 import com.bn.library.exception.UserAuthenticationException;
 import com.bn.library.exception.UserPermissionException;
@@ -11,6 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,6 +51,21 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public final ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException exception) {
+        return buildExceptionBody(exception, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileUploadException.class)
+    public final ResponseEntity<Object> handleFileUploadException(FileUploadException exception) {
+        return buildExceptionBody(exception, UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(FileDeleteException.class)
+    public final ResponseEntity<Object> handleFileDeleteException(FileDeleteException exception) {
+        return buildExceptionBody(exception, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IncorrectInputException.class)
+    public final ResponseEntity<Object> handleIncorrectInputException(IncorrectInputException exception) {
         return buildExceptionBody(exception, BAD_REQUEST);
     }
 }

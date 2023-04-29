@@ -19,14 +19,18 @@ import org.springframework.stereotype.Component;
 public class AllowedRolesAspect {
     @Around("@annotation(com.bn.library.util.annotation.AllowedRoles)")
     public Object doSomething(ProceedingJoinPoint jp) throws Throwable {
-        Set<RoleData> roles = Arrays
-                .stream(((MethodSignature) jp.getSignature()).getMethod().getAnnotation(AllowedRoles.class).value())
-                .collect(Collectors.toSet());
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        for (RoleData role : roles) {
-            if (user.getAuthorities().contains(new SimpleGrantedAuthority(role.getDBRoleName()))) {
-                return jp.proceed();
+        try {
+            Set<RoleData> roles = Arrays
+                    .stream(((MethodSignature) jp.getSignature()).getMethod().getAnnotation(AllowedRoles.class).value())
+                    .collect(Collectors.toSet());
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            for (RoleData role : roles) {
+                if (user.getAuthorities().contains(new SimpleGrantedAuthority(role.getDBRoleName()))) {
+                    return jp.proceed();
+                }
             }
+        } catch (ClassCastException e) {
+            throw new UserPermissionException();
         }
         throw new UserPermissionException();
     }
