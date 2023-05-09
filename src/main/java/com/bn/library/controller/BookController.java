@@ -24,4 +24,9 @@ public class BookController {
     public List<BookPreview> getAllBooksPreview() {
         return bookService.getAllBookPreviews();
     }
+
+    @GetMapping("/book/{id}")
+    public BookDto getBook(@PathVariable("id") int id) {
+        return bookService.getBookById(id);
+    }
 }

@@ -6,6 +6,7 @@ import com.bn.library.exception.FileDeleteException;
 import com.bn.library.exception.FileUploadException;
 import com.bn.library.exception.IncorrectInputException;
 import com.bn.library.exception.JsonWriteException;
+import com.bn.library.exception.NotExistException;
 import com.bn.library.exception.UserAuthenticationException;
 import com.bn.library.exception.UserPermissionException;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -69,6 +71,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleIncorrectInputException(IncorrectInputException exception) {
         return buildExceptionBody(exception, BAD_REQUEST);
     }
+
+    @ExceptionHandler(NotExistException.class)
+    public final ResponseEntity<Object> handleNotExistException(NotExistException exception) {
+        return buildExceptionBody(exception, NOT_FOUND);
+    }
+
     @ExceptionHandler(DtoConvertException.class)
     public final ResponseEntity<Object> handleDtoConvertException(DtoConvertException exception) {
         return buildExceptionBody(exception, BAD_REQUEST);

@@ -23,4 +23,11 @@ public class BookServiceImpl implements BookService {
     public List<BookPreview> getAllBookPreviews() {
         return dtoConverter.convertToDtoList(bookRepository.findAll(), BookPreview.class);
     }
+
+    @Override
+    public BookDto getBookById(int id) {
+        return dtoConverter.convertToDto(
+                bookRepository.findById(id).orElseThrow(NotExistException::new),
+                BookDto.class);
+    }
 }
