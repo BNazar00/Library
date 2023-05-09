@@ -1,6 +1,7 @@
 package com.bn.library.exception.handler;
 
 import com.bn.library.dto.exception.ExceptionResponse;
+import com.bn.library.exception.DtoConvertException;
 import com.bn.library.exception.FileDeleteException;
 import com.bn.library.exception.FileUploadException;
 import com.bn.library.exception.IncorrectInputException;
@@ -66,6 +67,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IncorrectInputException.class)
     public final ResponseEntity<Object> handleIncorrectInputException(IncorrectInputException exception) {
+        return buildExceptionBody(exception, BAD_REQUEST);
+    }
+    @ExceptionHandler(DtoConvertException.class)
+    public final ResponseEntity<Object> handleDtoConvertException(DtoConvertException exception) {
         return buildExceptionBody(exception, BAD_REQUEST);
     }
 }
