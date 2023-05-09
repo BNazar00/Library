@@ -1,31 +1,26 @@
 package com.bn.library.model;
 
-import com.bn.library.constant.RoleData;
+import com.bn.library.util.marker.Convertible;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
-@Table(name = "roles")
-public class Role implements Serializable {
+@Table(name = "publishers")
+public class Publisher implements Convertible {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @Column
     private String name;
-
-    public Role(RoleData role) {
-        this.name = role.getDBRoleName();
-    }
 }
