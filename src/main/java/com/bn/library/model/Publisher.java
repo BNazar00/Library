@@ -23,4 +23,8 @@ public class Publisher implements Convertible {
 
     @Column
     private String name;
+
+    public Publisher(Integer id) {
+        this.id = id;
+    }
 }

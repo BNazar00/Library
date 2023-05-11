@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,8 @@ public class Author {
 
     @Column(name = "last_name")
     private String lastName;
+
+    public Author(Integer id) {
+        this.id = id;
+    }
 }
