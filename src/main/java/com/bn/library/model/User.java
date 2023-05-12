@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,6 +46,9 @@ public class User implements UserDetails {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column
+    private BigDecimal balance;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
