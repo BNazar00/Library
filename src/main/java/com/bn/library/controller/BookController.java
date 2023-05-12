@@ -1,6 +1,7 @@
 package com.bn.library.controller;
 
-import com.bn.library.dto.book.BookCreationRequestDto;
+import com.bn.library.constant.RoleData;
+import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
 import com.bn.library.dto.book.BookPreview;
 import com.bn.library.service.BookService;
@@ -37,7 +38,7 @@ public class BookController {
 
     @AllowedRoles(RoleData.ADMIN)
     @PostMapping("/book")
-    public void addBook(@Valid @RequestBody BookCreationRequestDto book) {
+    public void addBook(@Valid @RequestBody BookCreateRequest book) {
         bookService.addBook(book);
     }
 }

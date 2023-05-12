@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class BookCreationRequestDto {
+public class BookCreateRequest {
     @NotNull(message = "Title cannot be null")
     @Size(min = 1, max = 255, message = "Title must be between 1 and 255 characters")
     private String title;
@@ -33,6 +33,10 @@ public class BookCreationRequestDto {
     @Min(value = 1, message = "Page count must be at least 1")
     @Max(value = 10000, message = "Page count cannot exceed 10000")
     private int pageCount;
+
+    @NotNull(message = "Number of copies cannot be null")
+    @Positive(message = "Number of copies must be a positive number")
+    private int numberOfCopies;
 
     @NotNull(message = "Price cannot be null")
     @Min(value = 0, message = "Price cannot be negative")

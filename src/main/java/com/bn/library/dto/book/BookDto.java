@@ -14,5 +14,6 @@ public class BookDto {
     private PublisherDto publisher;
     private int publicationYear;
     private int pageCount;
+    private int availableCount;
     private BigDecimal price;
 }

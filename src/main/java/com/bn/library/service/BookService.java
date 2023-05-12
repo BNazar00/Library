@@ -1,6 +1,6 @@
 package com.bn.library.service;
 
-import com.bn.library.dto.book.BookCreationRequestDto;
+import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
 import com.bn.library.dto.book.BookPreview;
 import java.util.List;
@@ -10,5 +10,5 @@ public interface BookService {
 
     BookDto getBookById(int id);
 
-    void addBook(BookCreationRequestDto book);
+    void addBook(BookCreateRequest book);
 }
