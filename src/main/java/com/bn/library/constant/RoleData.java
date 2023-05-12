@@ -1,7 +1,7 @@
 package com.bn.library.constant;
 
 public enum RoleData {
-    ADMIN("ADMIN"), USER("USER");
+    ADMIN("ADMIN"), USER("USER"), READER("READER");
     private static final String DB_PREFIX = "ROLE_";
 
     private final String name;

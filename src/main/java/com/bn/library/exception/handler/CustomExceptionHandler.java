@@ -5,6 +5,7 @@ import com.bn.library.exception.DtoConvertException;
 import com.bn.library.exception.FileDeleteException;
 import com.bn.library.exception.FileUploadException;
 import com.bn.library.exception.IncorrectInputException;
+import com.bn.library.exception.InsufficientFundsException;
 import com.bn.library.exception.JsonWriteException;
 import com.bn.library.exception.NotExistException;
 import com.bn.library.exception.UserAuthenticationException;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.PAYMENT_REQUIRED;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -80,5 +82,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DtoConvertException.class)
     public final ResponseEntity<Object> handleDtoConvertException(DtoConvertException exception) {
         return buildExceptionBody(exception, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InsufficientFundsException.class)
+    public final ResponseEntity<Object> handleInsufficientFundsException(InsufficientFundsException exception) {
+        return buildExceptionBody(exception, PAYMENT_REQUIRED);
     }
 }
