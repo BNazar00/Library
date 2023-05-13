@@ -1,6 +1,6 @@
 package com.bn.library.service.impl;
 
-import com.bn.library.dto.book.BookCheckOutRequest;
+import com.bn.library.dto.book.BookCheckoutRequest;
 import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
 import com.bn.library.dto.book.BookPreview;
@@ -56,7 +56,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookPreview> getLatestArrivals() {
+    public List<BookPreview> getTop10LatestArrivalsPreview() {
         return dtoConverter.convertToDtoList(bookRepository.findTop10ByOrderByIdDesc(), BookPreview.class);
     }
 
@@ -91,7 +91,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void checkOut(BookCheckOutRequest request) {
+    public void checkout(BookCheckoutRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         BookDto book = getBookById(request.getBookId());
         LocalDate issueDate = LocalDate.now();

@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .cors().and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole(ADMIN)
+                .requestMatchers("/api/v1/admin/**").hasRole(ADMIN)
                 .requestMatchers("/upload/**").permitAll()
                 .and()
                 .sessionManagement()
@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
-                .logoutUrl("/api/auth/logout")
+                .logoutUrl("/api/v1/auth/logout")
                 .addLogoutHandler(logoutHandler)
                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
         return http.build();

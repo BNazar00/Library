@@ -1,7 +1,7 @@
 package com.bn.library.controller;
 
 import com.bn.library.constant.RoleData;
-import com.bn.library.dto.book.BookCheckOutRequest;
+import com.bn.library.dto.book.BookCheckoutRequest;
 import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
 import com.bn.library.dto.book.BookPreview;
@@ -38,8 +38,8 @@ public class BookController {
     }
 
     @GetMapping("/latest-arrivals")
-    public List<BookPreview> getLatestArrivals() {
-        return bookService.getLatestArrivals();
+    public List<BookPreview> getLatestArrivalsPreview() {
+        return bookService.getTop10LatestArrivalsPreview();
     }
 
     @GetMapping("/{id}")
@@ -55,7 +55,7 @@ public class BookController {
 
     @AllowedRoles(RoleData.READER)
     @PostMapping("/checkout")
-    public void checkOut(@RequestBody BookCheckOutRequest request) {
-        bookService.checkOut(request);
+    public void checkout(@RequestBody BookCheckoutRequest request) {
+        bookService.checkout(request);
     }
 }

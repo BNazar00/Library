@@ -1,6 +1,6 @@
 package com.bn.library.service;
 
-import com.bn.library.dto.book.BookCheckOutRequest;
+import com.bn.library.dto.book.BookCheckoutRequest;
 import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
 import com.bn.library.dto.book.BookPreview;
@@ -11,11 +11,11 @@ public interface BookService {
 
     List<BookPreview> getTop10BestsellersPreview();
 
-    List<BookPreview> getLatestArrivals();
+    List<BookPreview> getTop10LatestArrivalsPreview();
 
     BookDto getBookById(int id);
 
     void addBook(BookCreateRequest book);
 
-    void checkOut(BookCheckOutRequest bookCheckOutRequest);
+    void checkout(BookCheckoutRequest bookCheckOutRequest);
 }
