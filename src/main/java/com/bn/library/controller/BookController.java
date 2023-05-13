@@ -37,6 +37,11 @@ public class BookController {
         return bookService.getTop10BestsellersPreview();
     }
 
+    @GetMapping("/latest-arrivals")
+    public List<BookPreview> getLatestArrivals() {
+        return bookService.getLatestArrivals();
+    }
+
     @GetMapping("/{id}")
     public BookDto getBook(@PathVariable("id") int id) {
         return bookService.getBookById(id);

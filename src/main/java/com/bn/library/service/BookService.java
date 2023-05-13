@@ -11,6 +11,8 @@ public interface BookService {
 
     List<BookPreview> getTop10BestsellersPreview();
 
+    List<BookPreview> getLatestArrivals();
+
     BookDto getBookById(int id);
 
     void addBook(BookCreateRequest book);

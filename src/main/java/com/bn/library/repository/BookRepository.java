@@ -18,4 +18,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
             LIMIT 10
             """, nativeQuery = true)
     List<Book> findTop10Bestsellers();
+
+    List<Book> findTop10ByOrderByIdDesc();
 }
