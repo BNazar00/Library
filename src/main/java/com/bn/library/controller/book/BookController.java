@@ -31,6 +31,12 @@ public class BookController {
         return bookService.getAllBookPreviews();
     }
 
+    @AllowedRoles(RoleData.ADMIN)
+    @GetMapping("/admin/all")
+    public List<BookDto> getAllBooks() {
+        return bookService.getAllBooks();
+    }
+
     @GetMapping("/bestsellers")
     public List<BookPreview> getBestsellersPreview() {
         return bookService.getTop10BestsellersPreview();

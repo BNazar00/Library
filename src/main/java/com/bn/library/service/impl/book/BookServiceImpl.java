@@ -37,6 +37,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookDto> getAllBooks() {
+        return dtoConverter.convertToDtoList(bookRepository.findAll(), BookDto.class);
+    }
+
+    @Override
     public List<BookPreview> getTop10BestsellersPreview() {
         return dtoConverter.convertToDtoList(bookRepository.findTop10Bestsellers(), BookPreview.class);
     }

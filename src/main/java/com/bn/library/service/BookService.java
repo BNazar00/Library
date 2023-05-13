@@ -8,6 +8,8 @@ import java.util.List;
 public interface BookService {
     List<BookPreview> getAllBookPreviews();
 
+    List<BookDto> getAllBooks();
+
     List<BookPreview> getTop10BestsellersPreview();
 
     List<BookPreview> getTop10LatestArrivalsPreview();
