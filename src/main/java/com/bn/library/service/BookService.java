@@ -9,6 +9,10 @@ import java.util.List;
 public interface BookService {
     List<BookPreview> getAllBookPreviews();
 
+    List<BookPreview> getTop10BestsellersPreview();
+
+    List<BookPreview> getLatestArrivals();
+
     BookDto getBookById(int id);
 
     void addBook(BookCreateRequest book);
