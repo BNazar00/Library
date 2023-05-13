@@ -50,7 +50,7 @@ public class BookServiceImpl implements BookService {
     public BookDto getBookById(int id) {
         Book entity = bookRepository.findById(id).orElseThrow(NotExistException::new);
         BookDto bookDto = dtoConverter.convertToDto(entity, BookDto.class);
-        bookDto.setAvailableCount(entity.getCopies().size());
+        bookDto.setAvailableCount(entity.getCopies().stream().filter(BookCopy::isInStorage).toList().size());
         return bookDto;
     }
 
