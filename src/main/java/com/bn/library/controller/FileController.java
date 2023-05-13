@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @Slf4j
-public class UploadController {
+public class FileController {
     private final FileService fileService;
 
-    public UploadController(FileService fileService) {
+    public FileController(FileService fileService) {
         this.fileService = fileService;
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/upload-image")
+    @PostMapping("/image")
     public ImageUploadResponse uploadImage(@RequestParam("image") MultipartFile image) {
         log.info("Image upload request");
         return fileService.uploadImage(image);
     }
 
     @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("/delete-image")
+    @DeleteMapping("/image")
     public void deleteImage(@RequestParam("imageName") String imageName) {
         log.info("Image delete request");
         fileService.deleteImage(imageName);
