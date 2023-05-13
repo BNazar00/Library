@@ -17,5 +17,5 @@ public interface BookService {
 
     void addBook(BookCreateRequest book);
 
-    void checkout(BookCheckoutRequest bookCheckOutRequest);
+    int checkout(BookCheckoutRequest bookCheckOutRequest);
 }

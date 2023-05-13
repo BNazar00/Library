@@ -91,14 +91,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void checkout(BookCheckoutRequest request) {
+    public int checkout(BookCheckoutRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         BookDto book = getBookById(request.getBookId());
         LocalDate issueDate = LocalDate.now();
         long daysDifference = ChronoUnit.DAYS.between(issueDate, request.getReturnDate()) + 1;
 
         if (book.getPrice().multiply(new BigDecimal(daysDifference)).compareTo(user.getBalance()) > 0) {
-            throw new InsufficientFundsException("Insufficient funds to check out the book.");
+            throw new InsufficientFundsException("Insufficient funds to checkout the book.");
         }
 
         user.setBalance(user.getBalance().subtract(
@@ -106,15 +106,16 @@ public class BookServiceImpl implements BookService {
         userRepository.save(user);
 
         BookCopy bookCopy = bookCopyRepository.findFirstByInStorageOrderById(true)
-                .orElseThrow(() -> new NotExistException("There are no books in storage"));
+                .orElseThrow(() -> new NotExistException("There are no books in the storage"));
         bookCopy.setInStorage(false);
         bookCopyRepository.save(bookCopy);
 
-        bookRegisterRepository.save(BookRegister.builder()
-                .bookCopy(bookCopy)
-                .user(user)
-                .issueDate(issueDate)
-                .returnDate(request.getReturnDate())
-                .build());
+        return bookRegisterRepository.saveAndFlush(BookRegister.builder()
+                        .bookCopy(bookCopy)
+                        .user(user)
+                        .issueDate(issueDate)
+                        .returnDate(request.getReturnDate())
+                        .build())
+                .getId();
     }
 }

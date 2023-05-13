@@ -56,8 +56,8 @@ public class BookController {
 
     @AllowedRoles(RoleData.READER)
     @PostMapping("/checkout")
-    public void checkout(@RequestBody BookCheckoutRequest request) {
+    public int checkout(@RequestBody BookCheckoutRequest request) {
         log.info("Book checkout request {}", request);
-        bookService.checkout(request);
+        return bookService.checkout(request);
     }
 }

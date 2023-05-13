@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class BookRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "book_copy_id")
