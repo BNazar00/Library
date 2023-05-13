@@ -32,6 +32,11 @@ public class BookController {
         return bookService.getAllBookPreviews();
     }
 
+    @GetMapping("/bestsellers")
+    public List<BookPreview> getBestsellersPreview() {
+        return bookService.getTop10BestsellersPreview();
+    }
+
     @GetMapping("/{id}")
     public BookDto getBook(@PathVariable("id") int id) {
         return bookService.getBookById(id);

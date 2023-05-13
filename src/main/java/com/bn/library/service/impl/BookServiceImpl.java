@@ -51,6 +51,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookPreview> getTop10BestsellersPreview() {
+        return dtoConverter.convertToDtoList(bookRepository.findTop10Bestsellers(), BookPreview.class);
+    }
+
+    @Override
     public BookDto getBookById(int id) {
         Book entity = bookRepository.findById(id).orElseThrow(NotExistException::new);
         BookDto bookDto = dtoConverter.convertToDto(entity, BookDto.class);
