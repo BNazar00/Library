@@ -50,12 +50,14 @@ public class BookController {
     @AllowedRoles(RoleData.ADMIN)
     @PostMapping
     public void addBook(@Valid @RequestBody BookCreateRequest book) {
+        log.info("Add book request {}", book);
         bookService.addBook(book);
     }
 
     @AllowedRoles(RoleData.READER)
     @PostMapping("/checkout")
     public void checkout(@RequestBody BookCheckoutRequest request) {
+        log.info("Book checkout request {}", request);
         bookService.checkout(request);
     }
 }
