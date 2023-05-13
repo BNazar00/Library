@@ -19,5 +19,13 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
             """, nativeQuery = true)
     List<Book> findTop10Bestsellers();
 
+    @Query(value = """
+            SELECT b.* FROM books b
+            JOIN book_copies bc ON bc.book_id = b.id
+            JOIN book_register br ON bc.id = br.book_copy_id
+            WHERE br.user_id = :userId AND br.status IN :checkoutStatuses
+            """, nativeQuery = true)
+    List<Book> findUserBooksByUserIdAndCheckoutStatuses(Integer userId, List<String> checkoutStatuses);
+
     List<Book> findTop10ByOrderByIdDesc();
 }

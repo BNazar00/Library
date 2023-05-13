@@ -1,5 +1,6 @@
 package com.bn.library.service.impl;
 
+import com.bn.library.constant.CheckoutStatus;
 import com.bn.library.dto.book.BookCheckoutRequest;
 import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
@@ -115,7 +116,17 @@ public class BookServiceImpl implements BookService {
                         .user(user)
                         .issueDate(issueDate)
                         .returnDate(request.getReturnDate())
+                        .status(CheckoutStatus.WAITING)
                         .build())
                 .getId();
+    }
+
+    @Override
+    public List<BookPreview> getUserBookPreviewsByUserIdAndCheckoutStatuses(int userId,
+                                                                            List<CheckoutStatus> checkoutStatuses) {
+        return dtoConverter.convertToDtoList(
+                bookRepository.findUserBooksByUserIdAndCheckoutStatuses(userId,
+                        checkoutStatuses.stream().map(CheckoutStatus::toString).toList()),
+                BookPreview.class);
     }
 }
