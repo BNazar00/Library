@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import lombok.Data;
 
 @Data
-public class BookCheckoutRequest {
+public class CheckoutRequest {
     @Positive(message = "Book ID must be a positive number")
     private int bookId;
 

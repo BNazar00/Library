@@ -1,7 +1,6 @@
 package com.bn.library.service;
 
 import com.bn.library.constant.CheckoutStatus;
-import com.bn.library.dto.book.BookCheckoutRequest;
 import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
 import com.bn.library.dto.book.BookPreview;
@@ -17,8 +16,6 @@ public interface BookService {
     BookDto getBookById(int id);
 
     void addBook(BookCreateRequest book);
-
-    int checkout(BookCheckoutRequest bookCheckOutRequest);
 
     List<BookPreview> getUserBookPreviewsByUserIdAndCheckoutStatuses(int userId, List<CheckoutStatus> checkoutStatuses);
 }

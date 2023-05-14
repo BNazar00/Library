@@ -1,7 +1,6 @@
-package com.bn.library.controller;
+package com.bn.library.controller.book;
 
 import com.bn.library.constant.RoleData;
-import com.bn.library.dto.book.BookCheckoutRequest;
 import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
 import com.bn.library.dto.book.BookPreview;
@@ -52,12 +51,5 @@ public class BookController {
     public void addBook(@Valid @RequestBody BookCreateRequest book) {
         log.info("Add book request {}", book);
         bookService.addBook(book);
-    }
-
-    @AllowedRoles(RoleData.READER)
-    @PostMapping("/checkout")
-    public int checkout(@RequestBody BookCheckoutRequest request) {
-        log.info("Book checkout request {}", request);
-        return bookService.checkout(request);
     }
 }

@@ -1,30 +1,21 @@
-package com.bn.library.service.impl;
+package com.bn.library.service.impl.book;
 
 import com.bn.library.constant.CheckoutStatus;
-import com.bn.library.dto.book.BookCheckoutRequest;
 import com.bn.library.dto.book.BookCreateRequest;
 import com.bn.library.dto.book.BookDto;
 import com.bn.library.dto.book.BookPreview;
-import com.bn.library.exception.InsufficientFundsException;
 import com.bn.library.exception.NotExistException;
 import com.bn.library.model.Author;
 import com.bn.library.model.Book;
 import com.bn.library.model.BookCopy;
-import com.bn.library.model.BookRegister;
 import com.bn.library.model.Publisher;
-import com.bn.library.model.User;
 import com.bn.library.repository.BookCopyRepository;
-import com.bn.library.repository.BookRegisterRepository;
 import com.bn.library.repository.BookRepository;
-import com.bn.library.repository.UserRepository;
 import com.bn.library.service.BookService;
 import com.bn.library.util.converter.DtoConverter;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,17 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookCopyRepository bookCopyRepository;
-    private final BookRegisterRepository bookRegisterRepository;
-    private final UserRepository userRepository;
     private final DtoConverter dtoConverter;
 
     public BookServiceImpl(BookRepository bookRepository, BookCopyRepository bookCopyRepository,
-                           BookRegisterRepository bookRegisterRepository, UserRepository userRepository,
                            DtoConverter dtoConverter) {
         this.bookRepository = bookRepository;
         this.bookCopyRepository = bookCopyRepository;
-        this.bookRegisterRepository = bookRegisterRepository;
-        this.userRepository = userRepository;
         this.dtoConverter = dtoConverter;
     }
 
@@ -88,37 +74,6 @@ public class BookServiceImpl implements BookService {
             copies.add(BookCopy.builder().inStorage(true).book(target).build());
         }
         bookCopyRepository.saveAll(copies);
-    }
-
-    @Override
-    @Transactional
-    public int checkout(BookCheckoutRequest request) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        BookDto book = getBookById(request.getBookId());
-        LocalDate issueDate = LocalDate.now();
-        long daysDifference = ChronoUnit.DAYS.between(issueDate, request.getReturnDate()) + 1;
-
-        if (book.getPrice().multiply(new BigDecimal(daysDifference)).compareTo(user.getBalance()) > 0) {
-            throw new InsufficientFundsException("Insufficient funds to checkout the book.");
-        }
-
-        user.setBalance(user.getBalance().subtract(
-                book.getPrice().multiply(new BigDecimal(daysDifference))));
-        userRepository.save(user);
-
-        BookCopy bookCopy = bookCopyRepository.findFirstByInStorageOrderById(true)
-                .orElseThrow(() -> new NotExistException("There are no books in the storage"));
-        bookCopy.setInStorage(false);
-        bookCopyRepository.save(bookCopy);
-
-        return bookRegisterRepository.saveAndFlush(BookRegister.builder()
-                        .bookCopy(bookCopy)
-                        .user(user)
-                        .issueDate(issueDate)
-                        .returnDate(request.getReturnDate())
-                        .status(CheckoutStatus.WAITING)
-                        .build())
-                .getId();
     }
 
     @Override
