@@ -9,6 +9,6 @@ public class CheckoutDto {
     private int id;
     private LocalDate issueDate;
     private LocalDate returnDate;
-    private BookCopyPreview bookCopy;
+    private BookCopyDto bookCopy;
     private CheckoutStatus status;
 }

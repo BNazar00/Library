@@ -1,12 +1,14 @@
 package com.bn.library.controller.book;
 
 import com.bn.library.constant.RoleData;
+import com.bn.library.dto.book.CheckoutDto;
 import com.bn.library.dto.book.CheckoutRequest;
 import com.bn.library.service.CheckoutService;
 import com.bn.library.util.annotation.AllowedRoles;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +25,17 @@ public class CheckoutController {
         this.checkoutService = checkoutService;
     }
 
+    @AllowedRoles({RoleData.ADMIN, RoleData.READER})
+    @GetMapping("/{id}")
+    public CheckoutDto getCheckout(@PathVariable("id") int id) {
+        return checkoutService.getCheckoutDtoById(id);
+    }
+
     @AllowedRoles(RoleData.READER)
     @PostMapping
-    public int checkout(@Valid @RequestBody CheckoutRequest request) {
+    public int addCheckout(@Valid @RequestBody CheckoutRequest request) {
         log.info("Book checkout request {}", request);
-        return checkoutService.checkout(request);
+        return checkoutService.addCheckout(request);
     }
 
     @AllowedRoles({RoleData.ADMIN, RoleData.READER})

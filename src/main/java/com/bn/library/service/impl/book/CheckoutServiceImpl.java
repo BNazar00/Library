@@ -3,6 +3,7 @@ package com.bn.library.service.impl.book;
 import com.bn.library.constant.CheckoutStatus;
 import com.bn.library.constant.RoleData;
 import com.bn.library.dto.book.BookDto;
+import com.bn.library.dto.book.CheckoutDto;
 import com.bn.library.dto.book.CheckoutPreview;
 import com.bn.library.dto.book.CheckoutRequest;
 import com.bn.library.exception.InsufficientFundsException;
@@ -45,7 +46,11 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     @Override
-    public Checkout getCheckoutById(int id) {
+    public CheckoutDto getCheckoutDtoById(int id) {
+        return dtoConverter.convertToDto(getCheckoutById(id), CheckoutDto.class);
+    }
+
+    private Checkout getCheckoutById(int id) {
         return checkoutRepository.findById(id).orElseThrow(NotExistException::new);
     }
 
@@ -56,7 +61,7 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     @Override
     @Transactional
-    public int checkout(CheckoutRequest request) {
+    public int addCheckout(CheckoutRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         BookDto book = bookService.getBookById(request.getBookId());
         LocalDate issueDate = LocalDate.now();
