@@ -9,23 +9,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value = """
-            SELECT b.*, COUNT(br.book_copy_id) AS total_borrowed
+            SELECT b.*, COUNT(c.book_copy_id) AS total_borrowed
             FROM books b
             JOIN book_copies bc ON b.id = bc.book_id
-            JOIN book_register br ON bc.id = br.book_copy_id
+            JOIN checkouts c ON bc.id = c.book_copy_id
             GROUP BY b.id
             ORDER BY total_borrowed DESC
             LIMIT 10
             """, nativeQuery = true)
     List<Book> findTop10Bestsellers();
-
-    @Query(value = """
-            SELECT b.* FROM books b
-            JOIN book_copies bc ON bc.book_id = b.id
-            JOIN book_register br ON bc.id = br.book_copy_id
-            WHERE br.user_id = :userId AND br.status IN :checkoutStatuses
-            """, nativeQuery = true)
-    List<Book> findUserBooksByUserIdAndCheckoutStatuses(Integer userId, List<String> checkoutStatuses);
 
     List<Book> findTop10ByOrderByIdDesc();
 }

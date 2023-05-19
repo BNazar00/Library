@@ -3,22 +3,24 @@ package com.bn.library.service.impl.book;
 import com.bn.library.constant.CheckoutStatus;
 import com.bn.library.constant.RoleData;
 import com.bn.library.dto.book.BookDto;
+import com.bn.library.dto.book.CheckoutPreview;
 import com.bn.library.dto.book.CheckoutRequest;
 import com.bn.library.exception.InsufficientFundsException;
 import com.bn.library.exception.NotExistException;
 import com.bn.library.exception.UserPermissionException;
 import com.bn.library.model.BookCopy;
-import com.bn.library.model.BookRegister;
+import com.bn.library.model.Checkout;
 import com.bn.library.model.User;
 import com.bn.library.repository.BookCopyRepository;
-import com.bn.library.repository.BookRegisterRepository;
+import com.bn.library.repository.CheckoutRepository;
 import com.bn.library.repository.UserRepository;
-import com.bn.library.service.BookRegisterService;
 import com.bn.library.service.BookService;
 import com.bn.library.service.CheckoutService;
+import com.bn.library.util.converter.DtoConverter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -27,20 +29,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
     private final BookService bookService;
-    private final BookRegisterService bookRegisterService;
     private final BookCopyRepository bookCopyRepository;
-    private final BookRegisterRepository bookRegisterRepository;
+    private final CheckoutRepository checkoutRepository;
     private final UserRepository userRepository;
+    private final DtoConverter dtoConverter;
 
-    public CheckoutServiceImpl(BookService bookService, BookRegisterService bookRegisterService,
-                               BookCopyRepository bookCopyRepository,
-                               BookRegisterRepository bookRegisterRepository,
-                               UserRepository userRepository) {
+    public CheckoutServiceImpl(BookService bookService, BookCopyRepository bookCopyRepository,
+                               CheckoutRepository checkoutRepository, UserRepository userRepository,
+                               DtoConverter dtoConverter) {
         this.bookService = bookService;
-        this.bookRegisterService = bookRegisterService;
         this.bookCopyRepository = bookCopyRepository;
-        this.bookRegisterRepository = bookRegisterRepository;
+        this.checkoutRepository = checkoutRepository;
         this.userRepository = userRepository;
+        this.dtoConverter = dtoConverter;
+    }
+
+    @Override
+    public Checkout getCheckoutById(int id) {
+        return checkoutRepository.findById(id).orElseThrow(NotExistException::new);
+    }
+
+    @Override
+    public List<CheckoutPreview> getCheckoutPreviewsByUserId(int userId) {
+        return dtoConverter.convertToDtoList(checkoutRepository.findAllByUserId(userId), CheckoutPreview.class);
     }
 
     @Override
@@ -64,7 +75,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         bookCopy.setInStorage(false);
         bookCopyRepository.save(bookCopy);
 
-        return bookRegisterRepository.saveAndFlush(BookRegister.builder()
+        return checkoutRepository.saveAndFlush(Checkout.builder()
                         .bookCopy(bookCopy)
                         .user(user)
                         .issueDate(issueDate)
@@ -77,7 +88,7 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     public void cancelCheckout(int checkoutId) {
         var userRoles = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
-        BookRegister checkoutData = bookRegisterService.getBookRegisterById(checkoutId);
+        Checkout checkoutData = getCheckoutById(checkoutId);
 
         if (CheckoutStatus.CANCELED.equals(checkoutData.getStatus())) {
             throw new NotExistException();
@@ -85,9 +96,17 @@ public class CheckoutServiceImpl implements CheckoutService {
                 && userRoles.contains(new SimpleGrantedAuthority(RoleData.USER.getDBRoleName()))) {
             throw new UserPermissionException();
         }
-        
+
         checkoutData.getBookCopy().setInStorage(true);
         checkoutData.setStatus(CheckoutStatus.CANCELED);
-        bookRegisterRepository.save(checkoutData);
+        checkoutRepository.save(checkoutData);
+    }
+
+    @Override
+    public List<CheckoutPreview> getCheckoutPreviewsByUserIdAndCheckoutStatuses(int userId,
+                                                                                List<CheckoutStatus> checkoutStatuses) {
+        return dtoConverter.convertToDtoList(
+                checkoutRepository.findAllByUserIdAndStatusIn(userId, checkoutStatuses),
+                CheckoutPreview.class);
     }
 }
