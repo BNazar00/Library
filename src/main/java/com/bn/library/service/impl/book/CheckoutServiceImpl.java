@@ -55,6 +55,11 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     @Override
+    public List<CheckoutDto> getAllCheckouts() {
+        return dtoConverter.convertToDtoList(checkoutRepository.findAll(), CheckoutDto.class);
+    }
+
+    @Override
     public List<CheckoutPreview> getCheckoutPreviewsByUserId(int userId) {
         return dtoConverter.convertToDtoList(checkoutRepository.findAllByUserId(userId), CheckoutPreview.class);
     }

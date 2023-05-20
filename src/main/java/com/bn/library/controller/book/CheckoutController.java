@@ -6,6 +6,7 @@ import com.bn.library.dto.book.CheckoutRequest;
 import com.bn.library.service.CheckoutService;
 import com.bn.library.util.annotation.AllowedRoles;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,12 @@ public class CheckoutController {
     @GetMapping("/{id}")
     public CheckoutDto getCheckout(@PathVariable("id") int id) {
         return checkoutService.getCheckoutDtoById(id);
+    }
+
+    @AllowedRoles(RoleData.ADMIN)
+    @GetMapping("/all")
+    public List<CheckoutDto> getAllCheckouts() {
+        return checkoutService.getAllCheckouts();
     }
 
     @AllowedRoles(RoleData.READER)

@@ -3,11 +3,13 @@ package com.bn.library.service;
 import com.bn.library.constant.CheckoutStatus;
 import com.bn.library.dto.book.CheckoutDto;
 import com.bn.library.dto.book.CheckoutPreview;
-import com.bn.library.dto.book.CheckoutRequest;
+import com.bn.library.dto.book.CheckoutCreateRequest;
 import java.util.List;
 
 public interface CheckoutService {
     CheckoutDto getCheckoutDtoById(int id);
+
+    List<CheckoutDto> getAllCheckouts();
 
     List<CheckoutPreview> getCheckoutPreviewsByUserId(int userId);
 
