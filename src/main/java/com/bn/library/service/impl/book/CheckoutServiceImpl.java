@@ -3,9 +3,10 @@ package com.bn.library.service.impl.book;
 import com.bn.library.constant.CheckoutStatus;
 import com.bn.library.constant.RoleData;
 import com.bn.library.dto.book.BookDto;
+import com.bn.library.dto.book.CheckoutCreateRequest;
 import com.bn.library.dto.book.CheckoutDto;
 import com.bn.library.dto.book.CheckoutPreview;
-import com.bn.library.dto.book.CheckoutRequest;
+import com.bn.library.dto.book.CheckoutUpdateRequest;
 import com.bn.library.exception.InsufficientFundsException;
 import com.bn.library.exception.NotExistException;
 import com.bn.library.exception.UserPermissionException;
@@ -22,12 +23,18 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static com.bn.library.constant.CheckoutStatus.CANCELED;
+import static com.bn.library.constant.CheckoutStatus.DONE;
+import static com.bn.library.constant.CheckoutStatus.WAITING;
 
 @Service
+@Slf4j
 public class CheckoutServiceImpl implements CheckoutService {
     private final BookService bookService;
     private final BookCopyRepository bookCopyRepository;
@@ -55,8 +62,9 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     @Override
-    public List<CheckoutDto> getAllCheckouts() {
-        return dtoConverter.convertToDtoList(checkoutRepository.findAll(), CheckoutDto.class);
+    public List<CheckoutDto> getAllCheckoutsOrderByIdDesc() {
+        return dtoConverter.convertToDtoList(checkoutRepository.findAll(Sort.by(Sort.Direction.DESC, "id")),
+                CheckoutDto.class);
     }
 
     @Override
@@ -65,8 +73,16 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     @Override
+    public List<CheckoutPreview> getCheckoutPreviewsByUserIdAndCheckoutStatuses(int userId,
+                                                                                List<CheckoutStatus> checkoutStatuses) {
+        return dtoConverter.convertToDtoList(
+                checkoutRepository.findAllByUserIdAndStatusIn(userId, checkoutStatuses),
+                CheckoutPreview.class);
+    }
+
+    @Override
     @Transactional
-    public int addCheckout(CheckoutRequest request) {
+    public int addCheckout(CheckoutCreateRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         BookDto book = bookService.getBookById(request.getBookId());
         LocalDate issueDate = LocalDate.now();
@@ -90,9 +106,38 @@ public class CheckoutServiceImpl implements CheckoutService {
                         .user(user)
                         .issueDate(issueDate)
                         .returnDate(request.getReturnDate())
-                        .status(CheckoutStatus.WAITING)
+                        .status(WAITING)
                         .build())
                 .getId();
+    }
+
+    @Override
+    public void updateCheckout(CheckoutUpdateRequest request) {
+        Checkout checkout = getCheckoutById(request.getId());
+        log.info("Checkout update from {}", checkout);
+
+        if (checkout.getStatus() == CANCELED || checkout.getStatus() == DONE
+                || !updateCheckoutStatus(checkout, request.getStatus())) {
+            log.error("Error updating checkout");
+            throw new IllegalArgumentException("Illegal data changing");
+        }
+
+        checkout.setIssueDate(request.getIssueDate());
+        checkout.setReturnDate(request.getReturnDate());
+
+        checkoutRepository.save(checkout);
+    }
+
+    private boolean updateCheckoutStatus(Checkout checkout, CheckoutStatus targetStatus) {
+        if (targetStatus == checkout.getStatus()) {
+            return true;
+        } else if (targetStatus.getWeight() - checkout.getStatus().getWeight() < 10) {
+            return false;
+        } else if (targetStatus == CANCELED || targetStatus == DONE) {
+            checkout.getBookCopy().setInStorage(true);
+        }
+        checkout.setStatus(targetStatus);
+        return true;
     }
 
     @Override
@@ -100,23 +145,15 @@ public class CheckoutServiceImpl implements CheckoutService {
         var userRoles = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
         Checkout checkoutData = getCheckoutById(checkoutId);
 
-        if (CheckoutStatus.CANCELED.equals(checkoutData.getStatus())) {
+        if (CANCELED == checkoutData.getStatus()) {
             throw new NotExistException();
-        } else if (!CheckoutStatus.WAITING.equals(checkoutData.getStatus())
+        } else if (WAITING != checkoutData.getStatus()
                 && userRoles.contains(new SimpleGrantedAuthority(RoleData.USER.getDBRoleName()))) {
             throw new UserPermissionException();
         }
 
         checkoutData.getBookCopy().setInStorage(true);
-        checkoutData.setStatus(CheckoutStatus.CANCELED);
+        checkoutData.setStatus(CANCELED);
         checkoutRepository.save(checkoutData);
-    }
-
-    @Override
-    public List<CheckoutPreview> getCheckoutPreviewsByUserIdAndCheckoutStatuses(int userId,
-                                                                                List<CheckoutStatus> checkoutStatuses) {
-        return dtoConverter.convertToDtoList(
-                checkoutRepository.findAllByUserIdAndStatusIn(userId, checkoutStatuses),
-                CheckoutPreview.class);
     }
 }
