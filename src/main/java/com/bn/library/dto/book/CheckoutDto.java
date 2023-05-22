@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class CheckoutDto {
     private int id;
-    private int userId;
+    private String userEmail;
     private LocalDate issueDate;
     private LocalDate returnDate;
     private BookCopyDto bookCopy;
