@@ -6,7 +6,7 @@ import com.bn.library.dto.book.BookPreview;
 import java.util.List;
 
 public interface BookService {
-    List<BookPreview> getAllBookPreviews();
+    List<BookPreview> getAllBookPreviewsOrderByCheckoutCount();
 
     List<BookDto> getAllBooks();
 

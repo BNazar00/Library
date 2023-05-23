@@ -27,8 +27,8 @@ public class BookController {
     }
 
     @GetMapping("/all")
-    public List<BookPreview> getAllBooksPreview() {
-        return bookService.getAllBookPreviews();
+    public List<BookPreview> getAllBookPreviewsOrderByCheckoutCount() {
+        return bookService.getAllBookPreviewsOrderByCheckoutCount();
     }
 
     @AllowedRoles(RoleData.ADMIN)
@@ -38,12 +38,12 @@ public class BookController {
     }
 
     @GetMapping("/bestsellers")
-    public List<BookPreview> getBestsellersPreview() {
+    public List<BookPreview> getBestsellerPreviews() {
         return bookService.getTop10BestsellersPreview();
     }
 
     @GetMapping("/latest-arrivals")
-    public List<BookPreview> getLatestArrivalsPreview() {
+    public List<BookPreview> getLatestArrivalPreviews() {
         return bookService.getTop10LatestArrivalsPreview();
     }
 
