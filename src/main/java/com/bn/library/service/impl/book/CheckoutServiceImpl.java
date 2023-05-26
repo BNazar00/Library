@@ -84,7 +84,7 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Transactional
     public int addCheckout(CheckoutCreateRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        BookDto book = bookService.getBookById(request.getBookId());
+        BookDto book = bookService.getBookDtoById(request.getBookId());
         LocalDate issueDate = LocalDate.now();
         long daysDifference = ChronoUnit.DAYS.between(issueDate, request.getReturnDate()) + 1;
 
