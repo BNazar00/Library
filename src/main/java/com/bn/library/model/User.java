@@ -48,11 +48,13 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column
+    @ToString.Exclude
     private BigDecimal balance;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ToString.Exclude
     private Set<Role> roles;
 
     @Override

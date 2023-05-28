@@ -1,7 +1,11 @@
 package com.bn.library.model;
 
+import com.bn.library.constant.CheckoutStatus;
+import com.bn.library.util.marker.Convertible;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,11 +23,11 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-@Table(name = "book_register")
-public class BookRegister {
+@Table(name = "checkouts")
+public class Checkout implements Convertible {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "book_copy_id")
@@ -38,4 +42,7 @@ public class BookRegister {
 
     @Column(name = "return_date")
     private LocalDate returnDate;
+
+    @Enumerated(EnumType.STRING)
+    private CheckoutStatus status;
 }

@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,6 +38,7 @@ public class Book implements Convertible {
     private String title;
 
     @Column(name = "photo_url")
+    @ToString.Exclude
     private String photoUrl;
 
     @ManyToOne
@@ -50,6 +52,7 @@ public class Book implements Convertible {
     private int pageCount;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<BookCopy> copies;
 
     @Column(precision = 10, scale = 2)
