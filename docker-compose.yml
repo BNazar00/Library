@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    env_file:
+      - example.env
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5332:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  main-service:
+    image: bnazar00/main-service:latest
+    container_name: main-service
+    ports:
+      - "8080:8080"
+    env_file:
+      - example.env
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+  spring:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:

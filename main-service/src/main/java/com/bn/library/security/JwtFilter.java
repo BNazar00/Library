@@ -19,7 +19,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
-    private static final String ABSENT_TOKEN = "Token is empty [%s]";
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
@@ -61,24 +60,5 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
-
-        //try {
-        //    String accessToken = authHeader.substring(7);
-        //    String userEmail = jwtService.extractUsername(jwt);
-        //        UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-        //
-        //    if (StringUtils.hasText(accessToken) && jwtService.isTokenValid(accessToken, userDetails)) {
-        //        UsernamePasswordAuthenticationToken authentication =
-        //                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        //        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        //        SecurityContextHolder.getContext().setAuthentication(authentication);
-        //        log.debug("User {} successfully authenticate with token {}", userDetails.getUsername(), accessToken);
-        //    } else {
-        //        log.debug(String.format(ABSENT_TOKEN, request.getRequestURI()));
-        //    }
-        //} catch (Exception ex) {
-        //    log.error("Could not authenticate user", ex);
-        //}
-        //filterChain.doFilter(request, response);
     }
 }
