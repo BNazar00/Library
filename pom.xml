@@ -10,6 +10,7 @@
 
     <modules>
         <module>main-service</module>
+        <module>book</module>
     </modules>
 
     <name>LibraryServices</name>

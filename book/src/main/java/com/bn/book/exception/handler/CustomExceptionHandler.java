@@ -1,22 +1,18 @@
-package com.bn.library.exception.handler;
+package com.bn.book.exception.handler;
 
-import com.bn.library.dto.exception.ExceptionResponse;
-import com.bn.library.exception.DtoConvertException;
-import com.bn.library.exception.FileDeleteException;
-import com.bn.library.exception.FileUploadException;
-import com.bn.library.exception.IncorrectInputException;
-import com.bn.library.exception.JsonWriteException;
-import com.bn.library.exception.NotExistException;
-import com.bn.library.exception.UserAuthenticationException;
-import com.bn.library.exception.UserPermissionException;
+import com.bn.book.dto.exception.ExceptionResponse;
+import com.bn.book.exception.DtoConvertException;
+import com.bn.book.exception.InsufficientFundsException;
+import com.bn.book.exception.NotExistException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.PAYMENT_REQUIRED;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -37,21 +33,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(httpStatus).body(exceptionResponse);
     }
 
-    @ExceptionHandler(UserAuthenticationException.class)
-    public final ResponseEntity<Object> handleUserAuthenticationException(UserAuthenticationException exception) {
-        return buildExceptionBody(exception, FORBIDDEN);
-    }
-
-    @ExceptionHandler(UserPermissionException.class)
-    public final ResponseEntity<Object> handleUserPermissionException(UserPermissionException exception) {
-        return buildExceptionBody(exception, FORBIDDEN);
-    }
-
-    @ExceptionHandler(JsonWriteException.class)
-    public final ResponseEntity<Object> handleJsonWriteException(JsonWriteException exception) {
-        return buildExceptionBody(exception, BAD_REQUEST);
-    }
-
     @ExceptionHandler(IllegalArgumentException.class)
     public final ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException exception) {
         return buildExceptionBody(exception, BAD_REQUEST);
@@ -62,16 +43,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return buildExceptionBody(exception, UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(FileDeleteException.class)
-    public final ResponseEntity<Object> handleFileDeleteException(FileDeleteException exception) {
-        return buildExceptionBody(exception, BAD_REQUEST);
-    }
-
-    @ExceptionHandler(IncorrectInputException.class)
-    public final ResponseEntity<Object> handleIncorrectInputException(IncorrectInputException exception) {
-        return buildExceptionBody(exception, BAD_REQUEST);
-    }
-
     @ExceptionHandler(NotExistException.class)
     public final ResponseEntity<Object> handleNotExistException(NotExistException exception) {
         return buildExceptionBody(exception, NOT_FOUND);
@@ -80,5 +51,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DtoConvertException.class)
     public final ResponseEntity<Object> handleDtoConvertException(DtoConvertException exception) {
         return buildExceptionBody(exception, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InsufficientFundsException.class)
+    public final ResponseEntity<Object> handleInsufficientFundsException(InsufficientFundsException exception) {
+        return buildExceptionBody(exception, PAYMENT_REQUIRED);
     }
 }

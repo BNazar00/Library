@@ -15,6 +15,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: main_service
+
 application:
   security:
     jwt:
