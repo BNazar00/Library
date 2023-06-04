@@ -1,6 +1,6 @@
 package com.bn.book.util.annotation;
 
-import com.bn.book.constant.RoleData;
+import com.bn.clients.constant.RoleData;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

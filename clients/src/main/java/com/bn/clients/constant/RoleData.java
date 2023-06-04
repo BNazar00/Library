@@ -1,4 +1,4 @@
-package com.bn.book.constant;
+package com.bn.clients.constant;
 
 public enum RoleData {
     ADMIN("ADMIN"), USER("USER"), READER("READER");

@@ -1,22 +1,19 @@
 package com.bn.book.services.impl;
 
-import com.bn.book.constant.CheckoutStatus;
-import static com.bn.book.constant.CheckoutStatus.CANCELED;
-import static com.bn.book.constant.CheckoutStatus.DONE;
-import static com.bn.book.constant.CheckoutStatus.WAITING;
 import com.bn.book.dto.BookDto;
 import com.bn.book.dto.CheckoutCreateRequest;
 import com.bn.book.dto.CheckoutDto;
-import com.bn.book.dto.CheckoutPreview;
 import com.bn.book.dto.CheckoutUpdateRequest;
-import com.bn.book.exception.NotExistException;
 import com.bn.book.model.BookCopy;
 import com.bn.book.model.Checkout;
 import com.bn.book.repository.BookCopyRepository;
 import com.bn.book.repository.CheckoutRepository;
 import com.bn.book.services.BookService;
 import com.bn.book.services.CheckoutService;
-import com.bn.book.util.converter.DtoConverter;
+import com.bn.clients.book.constant.CheckoutStatus;
+import com.bn.clients.book.dto.CheckoutPreview;
+import com.bn.clients.exception.NotExistException;
+import com.bn.clients.util.converter.DtoConverter;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -24,6 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static com.bn.clients.book.constant.CheckoutStatus.CANCELED;
+import static com.bn.clients.book.constant.CheckoutStatus.DONE;
+import static com.bn.clients.book.constant.CheckoutStatus.WAITING;
 
 @Service
 @Slf4j

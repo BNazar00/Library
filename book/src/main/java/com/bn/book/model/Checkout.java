@@ -1,7 +1,7 @@
 package com.bn.book.model;
 
-import com.bn.book.constant.CheckoutStatus;
-import com.bn.book.util.marker.Convertible;
+import com.bn.clients.book.constant.CheckoutStatus;
+import com.bn.clients.util.marker.Convertible;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

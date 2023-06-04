@@ -1,7 +1,7 @@
 package com.bn.library.controller;
 
-import com.bn.library.constant.RoleData;
-import com.bn.library.dto.book.CheckoutPreview;
+import com.bn.clients.book.dto.CheckoutPreview;
+import com.bn.clients.constant.RoleData;
 import com.bn.library.service.UserService;
 import com.bn.library.util.annotation.AllowedRoles;
 import java.util.List;

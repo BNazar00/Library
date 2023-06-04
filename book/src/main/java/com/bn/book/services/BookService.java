@@ -2,7 +2,7 @@ package com.bn.book.services;
 
 import com.bn.book.dto.BookCreateRequest;
 import com.bn.book.dto.BookDto;
-import com.bn.book.dto.BookPreview;
+import com.bn.clients.book.dto.BookPreview;
 import com.bn.book.dto.BookUpdateRequest;
 import java.util.List;
 

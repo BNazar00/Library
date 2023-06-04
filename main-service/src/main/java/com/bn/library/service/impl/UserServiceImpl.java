@@ -1,6 +1,6 @@
 package com.bn.library.service.impl;
 
-import com.bn.library.dto.book.CheckoutPreview;
+import com.bn.clients.book.dto.CheckoutPreview;
 import com.bn.library.model.User;
 import com.bn.library.repository.UserRepository;
 import com.bn.library.service.UserService;

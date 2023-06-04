@@ -1,6 +1,6 @@
 package com.bn.book.dto;
 
-import com.bn.book.constant.CheckoutStatus;
+import com.bn.clients.book.constant.CheckoutStatus;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;

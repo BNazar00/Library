@@ -1,6 +1,6 @@
 package com.bn.library.service.impl;
 
-import com.bn.library.constant.RoleData;
+import com.bn.clients.constant.RoleData;
 import com.bn.library.dto.auth.AuthenticationRequest;
 import com.bn.library.dto.auth.AuthenticationResponse;
 import com.bn.library.dto.auth.RegisterRequest;

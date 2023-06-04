@@ -1,6 +1,6 @@
 package com.bn.library.model;
 
-import com.bn.library.util.marker.Convertible;
+import com.bn.clients.util.marker.Convertible;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

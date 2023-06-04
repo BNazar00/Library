@@ -1,9 +1,9 @@
 package com.bn.book.exception.handler;
 
 import com.bn.book.dto.exception.ExceptionResponse;
-import com.bn.book.exception.DtoConvertException;
 import com.bn.book.exception.InsufficientFundsException;
-import com.bn.book.exception.NotExistException;
+import com.bn.clients.exception.DtoConvertException;
+import com.bn.clients.exception.NotExistException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;

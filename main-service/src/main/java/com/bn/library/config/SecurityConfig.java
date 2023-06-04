@@ -1,6 +1,6 @@
 package com.bn.library.config;
 
-import com.bn.library.constant.RoleData;
+import com.bn.clients.constant.RoleData;
 import com.bn.library.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +20,6 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 @EnableMethodSecurity
 public class SecurityConfig {
     private static final String ADMIN = RoleData.ADMIN.getRoleName();
-    private static final String USER = RoleData.USER.getRoleName();
-
     private final JwtFilter jwtFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;

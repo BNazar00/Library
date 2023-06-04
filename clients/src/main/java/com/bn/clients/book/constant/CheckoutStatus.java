@@ -1,6 +1,6 @@
-package com.bn.book.constant;
+package com.bn.clients.book.constant;
 
-public enum CheckoutStatus implements Comparable<CheckoutStatus> {
+public enum CheckoutStatus {
     WAITING(10), IN_PROGRESS(20), CANCELED(35), DONE(40);
 
     private final int weight;

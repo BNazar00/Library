@@ -1,6 +1,6 @@
 package com.bn.book.repository;
 
-import com.bn.book.constant.CheckoutStatus;
+import com.bn.clients.book.constant.CheckoutStatus;
 import com.bn.book.model.Checkout;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
-package com.bn.book.dto;
+package com.bn.clients.book.dto;
 
-import com.bn.book.constant.CheckoutStatus;
+import com.bn.clients.book.constant.CheckoutStatus;
 import lombok.Data;
 
 @Data

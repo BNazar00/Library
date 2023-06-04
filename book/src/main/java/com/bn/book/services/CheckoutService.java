@@ -1,9 +1,9 @@
 package com.bn.book.services;
 
-import com.bn.book.constant.CheckoutStatus;
+import com.bn.clients.book.constant.CheckoutStatus;
 import com.bn.book.dto.CheckoutCreateRequest;
 import com.bn.book.dto.CheckoutDto;
-import com.bn.book.dto.CheckoutPreview;
+import com.bn.clients.book.dto.CheckoutPreview;
 import com.bn.book.dto.CheckoutUpdateRequest;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.bn.library.model;
 
-import com.bn.library.constant.RoleData;
+import com.bn.clients.constant.RoleData;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,6 +1,6 @@
 package com.bn.book.util.annotation;
 
-import com.bn.book.constant.RoleData;
+import com.bn.clients.constant.RoleData;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;

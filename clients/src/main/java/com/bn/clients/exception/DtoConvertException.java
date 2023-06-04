@@ -1,4 +1,4 @@
-package com.bn.library.exception;
+package com.bn.clients.exception;
 
 public class DtoConvertException extends IllegalArgumentException {
     private static final String CONVERT_EXCEPTION = "Entity convert exception";

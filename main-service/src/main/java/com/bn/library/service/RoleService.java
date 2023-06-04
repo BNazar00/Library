@@ -1,6 +1,6 @@
 package com.bn.library.service;
 
-import com.bn.library.constant.RoleData;
+import com.bn.clients.constant.RoleData;
 import com.bn.library.model.Role;
 
 public interface RoleService {

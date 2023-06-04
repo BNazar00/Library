@@ -1,12 +1,12 @@
 package com.bn.library.exception.handler;
 
+import com.bn.clients.exception.DtoConvertException;
+import com.bn.clients.exception.NotExistException;
 import com.bn.library.dto.exception.ExceptionResponse;
-import com.bn.library.exception.DtoConvertException;
 import com.bn.library.exception.FileDeleteException;
 import com.bn.library.exception.FileUploadException;
 import com.bn.library.exception.IncorrectInputException;
 import com.bn.library.exception.JsonWriteException;
-import com.bn.library.exception.NotExistException;
 import com.bn.library.exception.UserAuthenticationException;
 import com.bn.library.exception.UserPermissionException;
 import lombok.AllArgsConstructor;

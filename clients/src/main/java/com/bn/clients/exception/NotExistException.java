@@ -1,4 +1,4 @@
-package com.bn.library.exception;
+package com.bn.clients.exception;
 
 import lombok.extern.slf4j.Slf4j;
 

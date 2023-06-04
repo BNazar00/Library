@@ -1,6 +1,6 @@
 package com.bn.library.util.annotation;
 
-import com.bn.library.constant.RoleData;
+import com.bn.clients.constant.RoleData;
 import com.bn.library.exception.UserPermissionException;
 import com.bn.library.model.User;
 import java.util.Arrays;

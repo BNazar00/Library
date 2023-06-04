@@ -2,15 +2,15 @@ package com.bn.book.services.impl;
 
 import com.bn.book.dto.BookCreateRequest;
 import com.bn.book.dto.BookDto;
-import com.bn.book.dto.BookPreview;
 import com.bn.book.dto.BookUpdateRequest;
-import com.bn.book.exception.NotExistException;
 import com.bn.book.model.Book;
 import com.bn.book.model.BookCopy;
 import com.bn.book.repository.BookCopyRepository;
 import com.bn.book.repository.BookRepository;
 import com.bn.book.services.BookService;
-import com.bn.book.util.converter.DtoConverter;
+import com.bn.clients.book.dto.BookPreview;
+import com.bn.clients.exception.NotExistException;
+import com.bn.clients.util.converter.DtoConverter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
