@@ -4,5 +4,5 @@ import com.bn.clients.constant.RoleData;
 import com.bn.library.model.Role;
 
 public interface RoleService {
-    Role getOrCreateRole(RoleData role);
+    Role getOrCreateRole(RoleData roleData);
 }

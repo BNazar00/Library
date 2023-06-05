@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "roles")
+@Table(name = "roleData")
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,6 @@ public class Role implements Serializable {
     private String name;
 
     public Role(RoleData role) {
-        this.name = role.getDBRoleName();
+        this.name = role.getRoleName();
     }
 }

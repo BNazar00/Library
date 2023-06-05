@@ -2,7 +2,6 @@ package com.bn.clients.constant;
 
 public enum RoleData {
     ADMIN("ADMIN"), USER("USER"), READER("READER");
-    private static final String DB_PREFIX = "ROLE_";
 
     private final String name;
 
@@ -12,10 +11,6 @@ public enum RoleData {
 
     public String getRoleName() {
         return name;
-    }
-
-    public String getDBRoleName() {
-        return DB_PREFIX + name;
     }
 
     @Override

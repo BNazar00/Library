@@ -5,7 +5,6 @@ import com.bn.library.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,14 +20,12 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 public class SecurityConfig {
     private static final String ADMIN = RoleData.ADMIN.getRoleName();
     private final JwtFilter jwtFilter;
-    private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
 
     @Autowired
-    public SecurityConfig(JwtFilter jwtFilter, AuthenticationProvider authenticationProvider,
+    public SecurityConfig(JwtFilter jwtFilter,
                           LogoutHandler logoutHandler) {
         this.jwtFilter = jwtFilter;
-        this.authenticationProvider = authenticationProvider;
         this.logoutHandler = logoutHandler;
     }
 
@@ -44,7 +41,6 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
                 .logoutUrl("/api/v1/auth/logout")

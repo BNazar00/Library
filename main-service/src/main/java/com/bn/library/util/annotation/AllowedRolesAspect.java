@@ -1,8 +1,8 @@
 package com.bn.library.util.annotation;
 
 import com.bn.clients.constant.RoleData;
-import com.bn.library.exception.UserPermissionException;
-import com.bn.library.model.User;
+import com.bn.clients.exception.UserPermissionException;
+import com.bn.library.security.UserPrincipal;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,12 +20,12 @@ public class AllowedRolesAspect {
     @Around("@annotation(com.bn.library.util.annotation.AllowedRoles)")
     public Object doSomething(ProceedingJoinPoint jp) throws Throwable {
         try {
-            Set<RoleData> roles = Arrays
+            Set<RoleData> roleData = Arrays
                     .stream(((MethodSignature) jp.getSignature()).getMethod().getAnnotation(AllowedRoles.class).value())
                     .collect(Collectors.toSet());
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            for (RoleData role : roles) {
-                if (user.getAuthorities().contains(new SimpleGrantedAuthority(role.getDBRoleName()))) {
+            UserPrincipal user = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            for (RoleData role : roleData) {
+                if (user.getAuthorities().contains(new SimpleGrantedAuthority(role.getRoleName()))) {
                     return jp.proceed();
                 }
             }

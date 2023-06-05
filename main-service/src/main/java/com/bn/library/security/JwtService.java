@@ -1,7 +1,9 @@
 package com.bn.library.security;
 
+import com.bn.clients.constant.RoleData;
 import com.bn.library.exception.JsonWriteException;
 import com.bn.library.model.Role;
+import com.bn.library.model.User;
 import com.bn.library.repository.TokenRepository;
 import com.bn.library.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,12 +53,16 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
-        Set<String> roleNames =
-                userService.getUserByEmail(userDetails.getUsername()).getRoles().stream().map(Role::getName)
-                        .collect(Collectors.toSet());
+    public String generateToken(User user) {
+        UserPrincipal userPrincipal = new UserPrincipal(
+                user.getEmail(),
+                user.getRoles()
+                        .stream().map(role -> RoleData.valueOf(role.getName())).collect(Collectors.toSet()));
+        Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         try {
-            return generateToken(Map.of("roles", objectMapper.writeValueAsString(roleNames)), userDetails);
+            return generateToken(
+                    Map.of("roles", objectMapper.writeValueAsString(roleNames)),
+                    userPrincipal);
         } catch (JsonProcessingException e) {
             log.error("Error converting user roles to json {}", e.getMessage());
             throw new JsonWriteException(e.getMessage());

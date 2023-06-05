@@ -8,7 +8,7 @@ import com.bn.library.exception.FileUploadException;
 import com.bn.library.exception.IncorrectInputException;
 import com.bn.library.exception.JsonWriteException;
 import com.bn.library.exception.UserAuthenticationException;
-import com.bn.library.exception.UserPermissionException;
+import com.bn.clients.exception.UserPermissionException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
