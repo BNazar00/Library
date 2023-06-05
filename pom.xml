@@ -12,6 +12,7 @@
         <module>main-service</module>
         <module>book</module>
         <module>clients</module>
+        <module>api-gateway</module>
     </modules>
 
     <name>LibraryServices</name>
@@ -23,6 +24,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.maven.plugin.version>3.0.5</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>3.0.5</spring.boot.dependencies.version>
+        <spring-cloud.version>2022.0.1</spring-cloud.version>
         <image>bnazar00/${project.artifactId}:${project.version}</image>
     </properties>
 
@@ -35,6 +37,13 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -45,9 +54,27 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.netflix.eureka</groupId>
+                    <artifactId>eureka-client</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
