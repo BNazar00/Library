@@ -1,12 +1,12 @@
 package com.bn.book.controller;
 
-import com.bn.book.constant.RoleData;
 import com.bn.book.dto.BookCreateRequest;
 import com.bn.book.dto.BookDto;
-import com.bn.book.dto.BookPreview;
 import com.bn.book.dto.BookUpdateRequest;
 import com.bn.book.services.BookService;
 import com.bn.book.util.annotation.AllowedRoles;
+import com.bn.clients.book.dto.BookPreview;
+import com.bn.clients.constant.RoleData;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

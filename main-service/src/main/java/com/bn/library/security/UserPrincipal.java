@@ -57,9 +57,9 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String toString() {
-        return "UserPrincipal{" +
-                "username='" + username + '\'' +
-                ", authorities=" + authorities +
-                '}';
+        return "UserPrincipal{"
+                + "username='" + username + '\''
+                + ", authorities=" + authorities
+                + '}';
     }
 }

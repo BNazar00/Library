@@ -19,14 +19,15 @@ import reactor.core.publisher.Mono;
 @Component
 @Slf4j
 public class AuthenticationFilter implements GatewayFilter {
+    private static final String JWT_PARSE_URL = "http://localhost:8081/api/v1/jwt/parse";
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
-    private static final String JWT_PARSE_URL = "http://localhost:8081/api/v1/jwt/parse";
 
     public AuthenticationFilter(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
     }
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();

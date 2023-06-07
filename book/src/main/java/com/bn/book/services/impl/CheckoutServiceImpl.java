@@ -82,10 +82,10 @@ public class CheckoutServiceImpl implements CheckoutService {
         //if (book.getPrice().multiply(new BigDecimal(daysDifference)).compareTo(user.getBalance()) > 0) {
         //    throw new InsufficientFundsException("Insufficient funds to checkout the book.");
         //}
-//todo
-//        user.setBalance(user.getBalance().subtract(
-//                book.getPrice().multiply(new BigDecimal(daysDifference))));
-//        userRepository.save(user);
+        //todo
+        //user.setBalance(user.getBalance().subtract(
+        //        book.getPrice().multiply(new BigDecimal(daysDifference))));
+        //userRepository.save(user);
 
         BookCopy bookCopy = bookCopyRepository.findFirstByInStorageOrderById(true)
                 .orElseThrow(() -> new NotExistException("There are no books in the storage"));
@@ -133,7 +133,8 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     public void cancelCheckout(int checkoutId) {
         //todo
-        //var userRoles = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
+        //var userRoles =
+        // ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getAuthorities();
         Checkout checkoutData = getCheckoutById(checkoutId);
 
         if (CANCELED == checkoutData.getStatus()) {

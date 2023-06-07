@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class GatewayConfig {
-
     private final AuthenticationFilter filter;
 
     public GatewayConfig(AuthenticationFilter filter) {

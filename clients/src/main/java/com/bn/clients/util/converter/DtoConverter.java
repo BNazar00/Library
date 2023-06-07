@@ -22,11 +22,13 @@ public class DtoConverter {
         return modelMapper.map(entity, dtoClass);
     }
 
-    public <T, D extends com.bn.clients.util.marker.Convertible> D convertFromDtoToDto(T dtoConverted, D dtoConverting) {
+    public <T, D extends com.bn.clients.util.marker.Convertible> D convertFromDtoToDto(T dtoConverted,
+                                                                                       D dtoConverting) {
         return modelMapper.map(dtoConverted, (Type) dtoConverting.getClass());
     }
 
-    public <T extends com.bn.clients.util.marker.Convertible, D> List<D> convertToDtoList(List<T> entityList, Class<D> dtoClass) {
+    public <T extends com.bn.clients.util.marker.Convertible, D> List<D> convertToDtoList(List<T> entityList,
+                                                                                          Class<D> dtoClass) {
         return entityList.stream()
                 .map(entity -> modelMapper.map(entity, dtoClass))
                 .toList();
