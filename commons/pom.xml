@@ -10,7 +10,7 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>clients</artifactId>
+    <artifactId>commons</artifactId>
 
     <dependencies>
         <dependency>

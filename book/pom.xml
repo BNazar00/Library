@@ -38,7 +38,7 @@
     <dependencies>
         <dependency>
             <groupId>com.bn</groupId>
-            <artifactId>clients</artifactId>
+            <artifactId>commons</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
